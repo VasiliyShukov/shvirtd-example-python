@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    image: cr.yandex/crpo7mhdr71icemo1qq2/python
+    networks:
+      backend:
+        ipv4_address: 172.20.0.5
+    restart: on-failure
+    environment:
+      - MYSQL_HOST=db
+
+  db:
+    image: mysql:8
+    networks:
+      backend:
+        ipv4_address: 172.20.0.10
+    restart: on-failure
+    environment:
+      - MYSQL_ROOT_PASSWORD=vagrant
+      - MYSQL_DATABASE=base
+      - MYSQL_USER=vagrant
+      - MYSQL_PASSWORD=vagrant
+
+networks:
+  backend:
+
+include:
+  - proxy.yaml
